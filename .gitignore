@@ -1,0 +1,8 @@
+# Ignore everything
+*
+# But descend into directories
+!*/
+
+# Include the following files
+!.gitignore
+!init.el
