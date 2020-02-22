@@ -1,21 +1,28 @@
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+(eval-when-compile (require 'use-package))
+
+(use-package zenburn-theme
+  :ensure t)
 (load-theme 'zenburn t)
 (add-to-list 'default-frame-alist
              '(font . "Source Code Pro-16"))
 
+(use-package projectile
+  :ensure t)
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; change the current directory when you switch between projects
-;; this allows you to switch between files in the project without having
-;; to change the working directory manually
 (setq projectile-switch-project-action 'projectile-dired)
 
+(use-package magit
+  :ensure t)
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;; Eensure environment variables inside Emacs look the same as in the user's shell
+(use-package exec-path-from-shell
+  :ensure t)
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
