@@ -2,29 +2,30 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+(package-refresh-contents)
 
-(eval-when-compile (require 'use-package))
+(setq my-packages
+      '(exec-path-from-shell
+	magit
+	projectile
+	zenburn-theme))
 
-(use-package zenburn-theme
-  :ensure t)
-(load-theme 'zenburn t)
-(add-to-list 'default-frame-alist
-             '(font . "Source Code Pro-16"))
+(dolist (pkg my-packages)
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
 
-(use-package projectile
-  :ensure t)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-switch-project-action 'projectile-dired)
 
-(use-package magit
-  :ensure t)
-(global-set-key (kbd "C-x g") 'magit-status)
-
-(use-package exec-path-from-shell
-  :ensure t)
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(load-theme 'zenburn t)
+(add-to-list 'default-frame-alist
+             '(font . "Source Code Pro-16"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
