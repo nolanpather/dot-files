@@ -6,8 +6,10 @@
 
 (setq my-packages
       '(exec-path-from-shell
+	flycheck
 	magit
 	projectile
+	web-mode
 	zenburn-theme))
 
 (dolist (pkg my-packages)
@@ -17,11 +19,22 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 (global-set-key (kbd "C-x g") 'magit-status)
 
 (projectile-mode +1)
+(add-to-list 'projectile-globally-ignored-directories ".cache")
+(add-to-list 'projectile-globally-ignored-directories "coverage")
+(add-to-list 'projectile-globally-ignored-directories "dist")
+(add-to-list 'projectile-globally-ignored-directories "node_modules")
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-switch-project-action 'projectile-dired)
+
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx?$" . web-mode))
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")
+				     ("tsx" . "\\.ts[x]?\\'")))
 
 (load-theme 'zenburn t)
 (add-to-list 'default-frame-alist
@@ -34,7 +47,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (exec-path-from-shell magit projectile zenburn-theme))))
+    (flycheck exec-path-from-shell magit projectile zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
