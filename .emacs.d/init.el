@@ -6,9 +6,9 @@
 
 (setq my-packages
       '(exec-path-from-shell
-	flycheck
 	magit
 	projectile
+	tide
 	web-mode
 	zenburn-theme))
 
@@ -18,8 +18,6 @@
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -31,10 +29,21 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-switch-project-action 'projectile-dired)
 
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1))
+(add-hook 'before-save-hook 'tide-format-before-save)
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx?$" . web-mode))
-(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")
-				     ("tsx" . "\\.ts[x]?\\'")))
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+(add-hook 'web-mode-hook
+	  (lambda ()
+	    (when (string-equal "tsx" (file-name-extension buffer-file-name))
+	      (setup-tide-mode))))
 
 (load-theme 'zenburn t)
 (add-to-list 'default-frame-alist
@@ -47,7 +56,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck exec-path-from-shell magit projectile zenburn-theme))))
+    (exec-path-from-shell magit projectile tide zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
