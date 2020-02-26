@@ -7,6 +7,7 @@
 (setq my-packages
       '(exec-path-from-shell
 	magit
+        markdown-mode
 	projectile
 	tide
 	web-mode
