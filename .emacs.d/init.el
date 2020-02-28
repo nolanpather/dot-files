@@ -9,19 +9,22 @@
 	magit
         markdown-mode
 	projectile
+	solarized-theme
 	tide
-	web-mode
-	zenburn-theme))
+	web-mode))
 
 (dolist (pkg my-packages)
   (unless (package-installed-p pkg)
     (package-install pkg)))
 
+;; exec-path-from-shell
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
+;; projectile
 (projectile-mode +1)
 (add-to-list 'projectile-globally-ignored-directories ".cache")
 (add-to-list 'projectile-globally-ignored-directories "coverage")
@@ -30,6 +33,12 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-switch-project-action 'projectile-dired)
 
+;; solarized-theme
+(load-theme 'solarized-dark t)
+(add-to-list 'default-frame-alist
+             '(font . "Source Code Pro-16"))
+
+;; tide
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -45,10 +54,6 @@
 	  (lambda ()
 	    (when (string-equal "tsx" (file-name-extension buffer-file-name))
 	      (setup-tide-mode))))
-
-(load-theme 'zenburn t)
-(add-to-list 'default-frame-alist
-             '(font . "Source Code Pro-16"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
