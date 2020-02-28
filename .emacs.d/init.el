@@ -32,9 +32,6 @@
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(javascript-jshint))
-(flycheck-add-mode 'javascript-eslint 'typescript-mode)
-(flycheck-add-mode 'javascript-eslint 'web-mode)
-(add-hook 'web-mode-hook 'javascript-eslint)
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -54,20 +51,25 @@
              '(font . "Source Code Pro-16"))
 
 ;; tide
+(require 'tide)
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
+  (flycheck-mode +1)
   (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint 'append))
+  (tide-hl-identifier-mode +1))
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+(flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+(flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
 
 ;; web-mode
-(add-to-list 'auto-mode-alist '("\\.tsx" . web-mode))
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
-	  (lambda ()
-	    (when (string-equal "tsx" (file-name-extension buffer-file-name))
-	      (setup-tide-mode))))
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+(flycheck-add-mode 'javascript-eslint 'web-mode)
 
 ;; ---------------------------------------------------------------------
 ;; the following is generated code - do not add anything past this point
