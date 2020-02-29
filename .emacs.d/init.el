@@ -8,9 +8,10 @@
       '(add-node-modules-path
 	exec-path-from-shell
 	flycheck
+	helm
+	helm-ls-git
 	magit
         markdown-mode
-	projectile
 	solarized-theme
 	tide
 	web-mode))
@@ -33,17 +34,21 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(javascript-jshint))
 
+;; helm
+(require 'helm-config)
+(require 'helm-ls-git)
+(helm-mode 1)
+
+(global-unset-key (kbd "C-x c"))
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-d") 'helm-browse-project)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x r p") 'helm-projects-history)
+
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
-
-;; projectile
-(projectile-mode +1)
-(add-to-list 'projectile-globally-ignored-directories ".cache")
-(add-to-list 'projectile-globally-ignored-directories "coverage")
-(add-to-list 'projectile-globally-ignored-directories "dist")
-(add-to-list 'projectile-globally-ignored-directories "node_modules")
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(setq projectile-switch-project-action 'projectile-dired)
 
 ;; solarized-theme
 (load-theme 'solarized-dark t)
