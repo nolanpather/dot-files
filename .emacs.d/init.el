@@ -6,6 +6,7 @@
 
 (setq my-packages
       '(add-node-modules-path
+	company
 	exec-path-from-shell
 	flycheck
 	helm
@@ -62,7 +63,22 @@
   (tide-setup)
   (flycheck-mode +1)
   (eldoc-mode +1)
-  (tide-hl-identifier-mode +1))
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(defun eslint-fix-file ()
+  (interactive)
+  (message "eslint --fixing the file" (buffer-file-name))
+  (shell-command (concat "yarn eslint --fix " (buffer-file-name))))
+
+(defun eslint-fix-file-and-revert ()
+  (interactive)
+  (eslint-fix-file)
+  (revert-buffer t t))
+
+(add-hook 'after-save-hook
+	  (lambda() (when (string-match "tsx?$" (file-name-extension buffer-file-name)) (eslint-fix-file-and-revert))))
+
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
 (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
