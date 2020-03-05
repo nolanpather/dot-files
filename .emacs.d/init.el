@@ -7,12 +7,14 @@
 (setq my-packages
       '(add-node-modules-path
 	company
+	counsel-projectile
 	exec-path-from-shell
 	flycheck
-	helm
-	helm-ls-git
 	magit
         markdown-mode
+	neotree
+	nyan-mode
+	projectile
 	solarized-theme
 	tide
 	web-mode))
@@ -35,21 +37,25 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (setq-default flycheck-disabled-checkers '(javascript-jshint))
 
-;; helm
-(require 'helm-config)
-(require 'helm-ls-git)
-(helm-mode 1)
-
-(global-unset-key (kbd "C-x c"))
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-d") 'helm-browse-project)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x r p") 'helm-projects-history)
-
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
+
+;; neotree
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
+;; nyan-mode
+(require 'nyan-mode)
+(nyan-mode)
+
+;; projectile
+(require 'projectile)
+(require 'counsel-projectile)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(projectile-mode +1)
+(counsel-projectile-mode +1)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-s") 'swiper)
 
 ;; solarized-theme
 (load-theme 'solarized-dark t)
