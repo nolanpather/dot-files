@@ -15,6 +15,7 @@
 	neotree
 	nyan-mode
 	projectile
+	rainbow-delimiters
 	solarized-theme
 	tide
 	web-mode))
@@ -52,10 +53,14 @@
 (require 'projectile)
 (require 'counsel-projectile)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (projectile-mode +1)
 (counsel-projectile-mode +1)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-s") 'swiper)
+
+;; rainbow-delimiters
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; solarized-theme
 (load-theme 'solarized-dark t)
