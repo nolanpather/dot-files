@@ -72,6 +72,13 @@
 ;; Enable evil-magit
 (require 'evil-magit)
 
+;; Enable ido-ubiquitous-mode
+(require 'ido)
+(require 'ido-completing-read+)
+(ido-mode t)
+(setq ido-everywhere t)
+(ido-ubiquitous-mode t)
+
 ;; Enable neotree
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
@@ -88,9 +95,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (evil-magit zenburn-theme web-mode tide solarized-theme rainbow-delimiters nyan-mode neotree markdown-mode magit helm-ls-git exec-path-from-shell evil counsel-projectile company atom-one-dark-theme add-node-modules-path))))
+ '(package-selected-packages (quote (atom-one-dark-theme evil evil-magit magit neotree))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
