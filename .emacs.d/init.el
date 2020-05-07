@@ -7,6 +7,7 @@
 (setq my-packages
       '(atom-one-dark-theme
 	evil
+	evil-magit
 	magit
 	neotree
 	undo-tree))
@@ -68,9 +69,31 @@
 
 (evil-mode 1)
 
+;; Enable evil-magit
+(require 'evil-magit)
+
 ;; Enable neotree
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
 ;; Enable undo-tree
 (global-undo-tree-mode)
+
+;; ---------------------------------------------------------------------
+;; the following is generated code - do not add anything past this point
+;; ---------------------------------------------------------------------
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (evil-magit zenburn-theme web-mode tide solarized-theme rainbow-delimiters nyan-mode neotree markdown-mode magit helm-ls-git exec-path-from-shell evil counsel-projectile company atom-one-dark-theme add-node-modules-path))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
