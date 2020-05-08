@@ -8,6 +8,7 @@
       '(atom-one-dark-theme
 	evil
 	evil-magit
+	exec-path-from-shell
 	magit
 	neotree
 	undo-tree))
@@ -37,6 +38,10 @@
 
 ;; Enable evil-magit
 (require 'evil-magit)
+
+;; exec-path-from-shell
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 ;; Enable ido-ubiquitous-mode
 (require 'ido)
