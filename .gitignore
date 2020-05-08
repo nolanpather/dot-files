@@ -1,8 +1,8 @@
-# Ignore everything
-*
-# But descend into directories
-!*/
+.emacs.d/auto-save-list/
+.emacs.d/elpa/
+.emacs.d/transient/
 
-# Include the following files
-!.gitignore
-!init.el
+.DS_Store
+.emacs.d/ido.last
+
+*~
